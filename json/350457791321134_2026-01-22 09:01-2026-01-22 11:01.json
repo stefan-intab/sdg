@@ -1,0 +1,34 @@
+[
+    {
+        "CO2": 718,
+        "Time": "2026-01-22T09:48:31Z",
+        "Humidity": 24.4,
+        "Temperature": 20.8,
+        "signalStrength": -87,
+        "Battery Voltage": 3.64
+    },
+    {
+        "CO2": 492,
+        "Time": "2026-01-22T09:33:31Z",
+        "Humidity": 24.0,
+        "Temperature": 21.2,
+        "signalStrength": -87,
+        "Battery Voltage": 3.64
+    },
+    {
+        "CO2": 561,
+        "Time": "2026-01-22T09:18:31Z",
+        "Humidity": 22.5,
+        "Temperature": 21.5,
+        "signalStrength": -87,
+        "Battery Voltage": 3.64
+    },
+    {
+        "CO2": 540,
+        "Time": "2026-01-22T09:03:31Z",
+        "Humidity": 22.3,
+        "Temperature": 21.4,
+        "signalStrength": -87,
+        "Battery Voltage": 3.64
+    }
+]

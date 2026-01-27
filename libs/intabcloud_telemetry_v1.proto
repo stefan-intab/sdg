@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package intabcloud.telemetry.v1; 
+
+// One sample to insert by channel_id - normally 4 samples per transmission
+message Sample {
+  int32 channel_id = 1;
+  int64 ts = 2; // epoch seconds 
+  float value = 3; 
+} 
+
+// Typically one status per transmission (but occurs at every sample)
+message LoggerStatus { 
+  int64 ts = 1;
+  float signal = 2; // e.g. -80 
+  float battery = 3; // e.g. 3.652 
+} 
+
+// One logger batch with multiple samples (one or more transmissions)
+message LoggerBatch { 
+  int32 logger_id = 1;
+  int64 last_seen = 2; // typically the newest ts in samples (or packet time) 
+  repeated Sample samples = 3;
+  repeated LoggerStatus status = 4; 
+} 
+
+// Batch of multiple loggers   
+message Batch {
+  repeated LoggerBatch logger_batch = 1;
+}

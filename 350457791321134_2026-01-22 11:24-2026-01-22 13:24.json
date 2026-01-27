@@ -1,0 +1,450 @@
+[
+    {
+        "CO2": 246,
+        "Time": "2026-01-22T12:19:25Z",
+        "Humidity": 48.3,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 244,
+        "Time": "2026-01-22T12:18:25Z",
+        "Humidity": 48.3,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 241,
+        "Time": "2026-01-22T12:17:25Z",
+        "Humidity": 48.3,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 242,
+        "Time": "2026-01-22T12:16:25Z",
+        "Humidity": 48.3,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 239,
+        "Time": "2026-01-22T12:15:25Z",
+        "Humidity": 48.2,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 240,
+        "Time": "2026-01-22T12:14:23Z",
+        "Humidity": 48.2,
+        "Temperature": 14.9,
+        "signalStrength": -90,
+        "Battery Voltage": 3.61
+    },
+    {
+        "CO2": 243,
+        "Time": "2026-01-22T12:13:23Z",
+        "Humidity": 48.2,
+        "Temperature": 14.9,
+        "signalStrength": -90,
+        "Battery Voltage": 3.61
+    },
+    {
+        "CO2": 246,
+        "Time": "2026-01-22T12:12:23Z",
+        "Humidity": 48.2,
+        "Temperature": 14.9,
+        "signalStrength": -90,
+        "Battery Voltage": 3.61
+    },
+    {
+        "CO2": 241,
+        "Time": "2026-01-22T12:11:23Z",
+        "Humidity": 48.1,
+        "Temperature": 14.9,
+        "signalStrength": -90,
+        "Battery Voltage": 3.61
+    },
+    {
+        "CO2": 237,
+        "Time": "2026-01-22T12:10:23Z",
+        "Humidity": 48.1,
+        "Temperature": 14.9,
+        "signalStrength": -90,
+        "Battery Voltage": 3.61
+    },
+    {
+        "CO2": 245,
+        "Time": "2026-01-22T12:09:20Z",
+        "Humidity": 48.1,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.612
+    },
+    {
+        "CO2": 240,
+        "Time": "2026-01-22T12:08:20Z",
+        "Humidity": 48.1,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.612
+    },
+    {
+        "CO2": 241,
+        "Time": "2026-01-22T12:07:20Z",
+        "Humidity": 48.1,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.612
+    },
+    {
+        "CO2": 248,
+        "Time": "2026-01-22T12:06:20Z",
+        "Humidity": 48.6,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.612
+    },
+    {
+        "CO2": 254,
+        "Time": "2026-01-22T12:05:20Z",
+        "Humidity": 41.6,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.612
+    },
+    {
+        "CO2": 250,
+        "Time": "2026-01-22T12:04:18Z",
+        "Humidity": 21.9,
+        "Temperature": 14.8,
+        "signalStrength": -87,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 247,
+        "Time": "2026-01-22T12:03:18Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 255,
+        "Time": "2026-01-22T12:02:18Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 254,
+        "Time": "2026-01-22T12:01:18Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 255,
+        "Time": "2026-01-22T12:00:18Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 257,
+        "Time": "2026-01-22T11:59:15Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 255,
+        "Time": "2026-01-22T11:58:15Z",
+        "Humidity": 21.8,
+        "Temperature": 14.8,
+        "signalStrength": -89,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 255,
+        "Time": "2026-01-22T11:57:15Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 260,
+        "Time": "2026-01-22T11:56:15Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 258,
+        "Time": "2026-01-22T11:55:15Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -89,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 257,
+        "Time": "2026-01-22T11:54:14Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 264,
+        "Time": "2026-01-22T11:53:14Z",
+        "Humidity": 21.8,
+        "Temperature": 14.8,
+        "signalStrength": -88,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 261,
+        "Time": "2026-01-22T11:52:14Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 267,
+        "Time": "2026-01-22T11:51:14Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 261,
+        "Time": "2026-01-22T11:50:14Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 268,
+        "Time": "2026-01-22T11:49:12Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 264,
+        "Time": "2026-01-22T11:48:12Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 265,
+        "Time": "2026-01-22T11:47:12Z",
+        "Humidity": 21.8,
+        "Temperature": 14.8,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 265,
+        "Time": "2026-01-22T11:46:12Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 267,
+        "Time": "2026-01-22T11:45:12Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 265,
+        "Time": "2026-01-22T11:44:10Z",
+        "Humidity": 21.9,
+        "Temperature": 14.8,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 265,
+        "Time": "2026-01-22T11:43:10Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 267,
+        "Time": "2026-01-22T11:42:10Z",
+        "Humidity": 21.8,
+        "Temperature": 14.8,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 274,
+        "Time": "2026-01-22T11:41:10Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 277,
+        "Time": "2026-01-22T11:40:10Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    },
+    {
+        "CO2": 272,
+        "Time": "2026-01-22T11:39:08Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 278,
+        "Time": "2026-01-22T11:38:08Z",
+        "Humidity": 21.9,
+        "Temperature": 14.8,
+        "signalStrength": -88,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 274,
+        "Time": "2026-01-22T11:37:08Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 278,
+        "Time": "2026-01-22T11:36:08Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 276,
+        "Time": "2026-01-22T11:35:08Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -88,
+        "Battery Voltage": 3.616
+    },
+    {
+        "CO2": 280,
+        "Time": "2026-01-22T11:34:05Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -86,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 283,
+        "Time": "2026-01-22T11:33:05Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -86,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 283,
+        "Time": "2026-01-22T11:32:05Z",
+        "Humidity": 21.9,
+        "Temperature": 14.8,
+        "signalStrength": -86,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 282,
+        "Time": "2026-01-22T11:31:05Z",
+        "Humidity": 21.9,
+        "Temperature": 14.8,
+        "signalStrength": -86,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 286,
+        "Time": "2026-01-22T11:30:05Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -86,
+        "Battery Voltage": 3.614
+    },
+    {
+        "CO2": 289,
+        "Time": "2026-01-22T11:29:04Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.62
+    },
+    {
+        "CO2": 290,
+        "Time": "2026-01-22T11:28:04Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.62
+    },
+    {
+        "CO2": 287,
+        "Time": "2026-01-22T11:27:04Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.62
+    },
+    {
+        "CO2": 284,
+        "Time": "2026-01-22T11:26:04Z",
+        "Humidity": 21.8,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.62
+    },
+    {
+        "CO2": 287,
+        "Time": "2026-01-22T11:25:04Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.62
+    },
+    {
+        "CO2": 290,
+        "Time": "2026-01-22T11:24:02Z",
+        "Humidity": 21.9,
+        "Temperature": 14.9,
+        "signalStrength": -87,
+        "Battery Voltage": 3.618
+    }
+]
