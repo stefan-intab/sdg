@@ -1,1 +1,4 @@
 httpx
+pyjwt
+protobuf
+mypy-protobuf

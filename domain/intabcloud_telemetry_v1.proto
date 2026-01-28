@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package intabcloud.telemetry.v1; 
+
+enum SignalType {
+  WV_2G = 0;
+  WV_4G = 1;
+  WV_868 = 2;
+  CT_2G = 3;
+  CT_4G = 4;
+  NB_IOT = 5;
+  CAT_LTE = 6;
+}
+
+message LastValue {
+  int64 ts = 1;
+  float value = 2;
+
+  oneof key {
+    int32 channel_id = 3;
+    SignalType signal_type = 4;
+  }
+}
+
+// One sample to insert by channel_id - normally 4 samples per transmission
+message Sample {
+  int32 channel_id = 1;
+  int64 ts = 2; // epoch seconds 
+  float value = 3; 
+} 
+
+// Typically one status per transmission (but occurs at every sample)
+message LoggerSignal { 
+  int64 ts = 1;
+  float value = 2; // e.g. -80 
+} 
+
+// One logger batch with multiple samples (one or more transmissions)
+message LoggerBatch { 
+  int32 logger_id = 1;
+  float battery = 2;  // mean value of V in transmission
+  int64 last_seen = 3; // typically the newest ts in samples (or packet time)
+  SignalType signal_type = 4;
+  repeated Sample samples = 5;
+  repeated LoggerSignal signals = 6;
+  repeated LastValue last_values = 7;
+}
+
+message Gateway {
+  int32 gateway_id = 1;
+  int64 last_seen = 2;
+  float last_signal = 3;
+  SignalType signal_type = 4;
+}
+
+// Batch of multiple loggers   
+message Batch {
+  string transmission_id = 1;  // uuid 
+  repeated LoggerBatch logger_batch = 2;
+}
