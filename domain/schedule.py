@@ -22,13 +22,12 @@ class ScheduleState:
     generation: int  # bump when rescheduling: to ignore stale heap entries
     lock: asyncio.Lock
     errors: int
-    
+
     def __init__(self, last_seen: int, due_at: int | None = None, maxlen=5):
         self.due_at = due_at if due_at is not None else ts_now()
         self.last_seen = last_seen
         self.tx_history = deque(maxlen=maxlen)
         self.generation = 0
-        self.in_flight = False
         self.lock = asyncio.Lock()
         self.errors = 0
     

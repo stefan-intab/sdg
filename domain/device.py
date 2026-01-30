@@ -1,5 +1,7 @@
 from domain.schedule import ScheduleState
 
+from infra.logging_config import app_logger
+
 
 CHANNEL_TAGS_BY_MODEL = {
     "IOTSU_N3_AQ05": ["CO2", "Humidity", "Temperature"],
@@ -35,7 +37,6 @@ class Device:
         if not model.upper() in CHANNEL_TAGS_BY_MODEL:
             # Log error
             raise ValueError(f"Unknown logger model: {model}")
-
             
         self.id = id
         self.lookup_id = lookup_id
@@ -52,7 +53,8 @@ class Device:
     def get_channel_tags(self) -> list[str]:
         tags = CHANNEL_TAGS_BY_MODEL.get(self.model)
         if not tags:
-            raise KeyError()
+            app_logger.error("Could not extract channel tags by model from device id:", self.id)
+            return []
         return tags
     
     def add_new_channel(self, channel_id: int, tag: str) -> None:

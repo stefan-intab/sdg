@@ -7,10 +7,12 @@ from infra.logging_config import app_logger
 async def main() -> None:
     bridge = Brigde(AppConfig())
 
+    app_logger.info("Initializing SDG Bridge.")
+
     # Test: run for 10 seconds then stop
     runner = asyncio.create_task(bridge.run())
-    app_logger.info("SDG Bridge has started successfully.")
-    await asyncio.sleep(10)
+    
+    await asyncio.sleep(1000)
     await bridge.stop()
     app_logger.info("SDG Bridge is shutting down.")
     await runner

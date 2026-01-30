@@ -3,6 +3,7 @@ import asyncio
 import heapq
 import statistics
 from httpx import AsyncClient
+from uuid import uuid4
 
 from clients.sdg_client import SDGClient
 from clients.intab_client import IntabClient
@@ -10,7 +11,7 @@ from clients.nats_client import NATSClient, NATSConfig
 from infra.tokens import TokenConfig
 from infra.rate_limit import RateLimiter, RateLimiterConfig
 from domain.device import Device, Channel, ScheduleState
-from domain.intabcloud_telemetry_v1_pb2 import LoggerBatch, Sample, LoggerSignal, SignalType
+from domain.intabcloud_telemetry_v1_pb2 import LoggerBatch, Sample, LoggerSignal, SignalType, Batch
 from utils.time import ts_now, str_to_ts
 from infra.logging_config import app_logger
 import config
@@ -18,7 +19,7 @@ import config
 
 class AppConfig:
     out_queue_max = 50_000
-    discovery_interval_s = 600
+    discovery_interval_s = 60
     worker_count = 10
     scheduler_tick_s = 1  # fallback sleep when heap is empty
 
@@ -30,24 +31,28 @@ class Brigde:
         )
 
         # Set up SDG client
+        sdg_login_url = f"{config.SDG_API_BASE_URL}/users"
         self.sdg = SDGClient(
-            base_url="url",
+            base_url=config.SDG_API_BASE_URL,
             http_client=self.http_client,
             tkn_cfg=TokenConfig(
+                user_key=config.SDG_API_USERNAME_KEY,
                 username=config.SDG_API_USERNAME,
                 password=config.SDG_API_PASSWORD,
-                login_url=config.SDG_API_BASE_URL,
+                login_url=sdg_login_url,
             ),
             rl_cfg=RateLimiterConfig(),
         )
         # Set up intab client
+        intab_login_url = f"{config.INTAB_API_BASE_URL}/auth/token"
         self.intab = IntabClient(
-            base_url="url",
+            base_url=config.INTAB_API_BASE_URL,
             http_client=self.http_client,
             tkn_cfg=TokenConfig(
+                user_key=config.INTAB_API_USERNAME_KEY,
                 username=config.INTAB_API_USERNAME,
                 password=config.INTAB_API_PASSWORD,
-                login_url=config.INTAB_API_BASE_URL,
+                login_url=intab_login_url,
             ),
             rl_cfg=RateLimiterConfig()
         )
@@ -59,6 +64,8 @@ class Brigde:
                 password=config.NATS_PASSWORD,
                 server1=config.NATS_SERVER1,
                 port=int(config.NATS_PORT),
+                stream_name=config.NATS_STREAM_NAME,
+                subject=config.NATS_SUBJECT,
             )
         )
         
@@ -78,7 +85,7 @@ class Brigde:
         # initate loggers and store loggers found in intabcloud in self.loggers
         for l in loggers:
             device = self._initiate_logger(l)
-            device.schedule._update_due_at()
+            # device.schedule._update_due_at()
             self.devices[device.id] = device
             self.unique_device_ids.add(device.id)
 
@@ -119,6 +126,7 @@ class Brigde:
         try:
             while not self.stop_event.is_set():
                 item = await self._pop_due()
+                app_logger.debug(f"Popped item: {item}")
                 if item is None:
                     # no scheduled loggers
                     try:
@@ -128,15 +136,18 @@ class Brigde:
                     continue
 
                 due_at, logger_id = item
+                app_logger.debug(f"Extracted due_at: {due_at} for logger id: {logger_id}")
                 now = ts_now()
                 if due_at > now:
                     # sleep until due or stop
                     try:
+                        app_logger.debug(f"due at: {due_at}, now: {now}. Sleep for; {due_at - now}.")
                         await asyncio.wait_for(self.stop_event.wait(), timeout=(due_at - now))
                         break
                     except asyncio.TimeoutError:
                         pass
-
+                
+                app_logger.debug(f"Adding logger id: {logger_id} to work queue")
                 await work_q.put(logger_id)
 
         finally:
@@ -148,13 +159,15 @@ class Brigde:
     async def fetch_worker_loop(self, work_q: asyncio.Queue[int]) -> None:
         while True:
             logger_id = await work_q.get()
+            app_logger.debug(f"Worker got logger_id {logger_id}")
             try:
                 device = self.devices.get(logger_id)
                 if not device:
+                    app_logger.error(f"Could not extract device with logger id: {logger_id}")
                     continue
                 
                 async with device.schedule.lock:
-                    device.schedule.in_flight = True
+                    app_logger.debug(f"Calling 'fetch one' request for logger_id: {device.id}")
                     await self._fetch_one(device)
 
             except Exception as e:
@@ -168,17 +181,30 @@ class Brigde:
                       
                     # reschedule based on updated success/error state
                     d.schedule._update_due_at()
+                    app_logger.debug(f"Updated due at for device: {d}")
                     await self._reschedule(d)
 
                 work_q.task_done()
 
 
     async def _fetch_one(self, device: Device) -> None:
+        def _extract_last_seen(samples: list) -> int:
+            first = samples[0]
+            ts = first.get("Time")
+            if ts is None:
+                raise KeyError("Could not extract time.")
+            return str_to_ts(ts)
+        
+        def _extract_last_value(sample: dict, tags: list):
+            # Add signalStrength to given list of tags
+            pass
+
         since = device.schedule.last_seen
         try:
-            samples, last_seen = await self.sdg.fetch_samples(device.lookup_id, since=since)
+            samples = await self.sdg.fetch_samples(device.lookup_id, since=since)
 
-            if samples and last_seen:
+            if samples:
+                last_seen = _extract_last_seen(samples)
                 device.schedule.last_seen = last_seen
                 device.schedule.add_successful_tx(last_seen)
                 
@@ -216,7 +242,8 @@ class Brigde:
 
                         value = s.get(tag)
                         if value is None:
-                            raise KeyError()
+                            app_logger.warning(f"Could not extract value from sample for device id: {device.id}")
+                            continue
                         
                         sample = Sample(
                             channel_id=channel_id,
@@ -277,6 +304,7 @@ class Brigde:
         
         async with self.heap_lock:
             self._push_logger_to_heap(device=device)
+            app_logger.debug(f"Pushed logger_id: {device.id} to heap queue.")
 
 
     async def _merge_loggers(self, loggers: list[dict]) -> None:
@@ -293,9 +321,12 @@ class Brigde:
             logger = self._initiate_logger(l, now)
             self.devices[logger.id] = logger
             self.unique_device_ids.add(logger_id)
+
+            app_logger.debug(f"Initated logger: {logger_id}")
             
             async with self.heap_lock:
                 self._push_logger_to_heap(logger)
+                app_logger.debug(f"Pushed logger id {logger_id} to heap queue.")
             
             added += 1
         
@@ -322,14 +353,28 @@ class Brigde:
 
     def _initiate_logger(self, logger: dict, due_at: int|None = None):
         logger_id: int = logger["id"]
-        lookup_id: int = logger["lookup_id"]
-        logger_model: str = logger["tag"]
-        last_seen: int = logger["last_seen"]
-
         
+        #
+        # Not yet  implemented in REST API:
+        #
+        logger_model: str = logger["tag"]  # Add to API!
+        lookup_id: int = logger["serial_number"]  # Fix in API!
+        last_seen = logger.get("last_seen")
+
+        if last_seen is None:
+            app_logger.debug("last_seen is still NOT set!")
+            app_logger.debug("Faking last_seen")
+            last_seen = ts_now() - 3600
+
+        ###########
+
         logger_channels = logger.get("channels")
         if not isinstance(logger_channels, list):
-            raise KeyError()
+            app_logger.error(f"Logger channels is not a list for logger id: {logger_id}")
+            logger_channels = []
+        
+        if not logger_channels:
+            app_logger.debug(f"Logger channels is empty for logger id: {logger_id}")
         
         channels = []
         for ch in logger_channels:
@@ -351,6 +396,7 @@ class Brigde:
     async def nats_publisher_loop(self) -> None:
         buf: list[LoggerBatch] = []
         last_flush = ts_now()
+
         while not self.stop_event.is_set():
             try:
                 item = await asyncio.wait_for(self.publish_queue.get(), timeout=1.0)
@@ -359,10 +405,22 @@ class Brigde:
             except asyncio.TimeoutError:
                 pass
 
-            if len(buf) >= 200 or (ts_now() - last_flush) >= 2:
-                await self.nats.publish_batch(buf)  # protobuf serialize inside
+            should_flush = len(buf) >= 200 or (ts_now() - last_flush) >= 2
+            if not should_flush or not buf:
+                continue
+
+            batch_msg = Batch()
+            batch_msg.transmission_id = str(uuid4())
+            # Extend batch message with buffer list
+            batch_msg.logger_batch.extend(buf)
+
+            try:
+                await self.nats.publish_batch(batch_msg)
                 buf.clear()
                 last_flush = ts_now()
+            except Exception:
+                # Don't clear buf on failure; retry 
+                await asyncio.sleep(1.0)
 
 
     async def run(self) -> None:
@@ -373,6 +431,8 @@ class Brigde:
             asyncio.create_task(self.scheduler_loop(), name="scheduler"),
             asyncio.create_task(self.nats_publisher_loop(), name="publisher"),
         ]
+
+        app_logger.info("SDG Bridge has started successfully.")
 
         try:
             await self.stop_event.wait()

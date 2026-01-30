@@ -2,3 +2,4 @@ httpx
 pyjwt
 protobuf
 mypy-protobuf
+nats-py
